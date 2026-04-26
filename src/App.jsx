@@ -44,8 +44,15 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
-  }
 
+    const storageItems = JSON.parse(localStorage.getItem("pickedPlaces")) || [];
+    if (storageItems.indexOf(id) === -1) {
+      localStorage.setItem(
+        "pickedPlaces",
+        JSON.stringify([id, ...storageItems]),
+      );
+    }
+  }
   function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current),
